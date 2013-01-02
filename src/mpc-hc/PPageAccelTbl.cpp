@@ -116,9 +116,9 @@ CPPageAccelTbl::CPPageAccelTbl()
     , m_list(0)
     , m_counter(0)
     , m_fWinLirc(FALSE)
-    , m_WinLircLink(_T("http://winlirc.sourceforge.net/"))
+    , m_WinLircLink()
     , m_fUIce(FALSE)
-    , m_UIceLink(_T("http://www.mediatexx.com/"))
+    , m_UIceLink()
     , m_fGlobalMedia(FALSE)
 {
 }
@@ -1417,11 +1417,9 @@ void CPPageAccelTbl::DoDataExchange(CDataExchange* pDX)
     __super::DoDataExchange(pDX);
     DDX_Text(pDX, IDC_EDIT1, m_WinLircAddr);
     DDX_Control(pDX, IDC_EDIT1, m_WinLircEdit);
-    DDX_Control(pDX, IDC_STATICLINK, m_WinLircLink);
     DDX_Check(pDX, IDC_CHECK1, m_fWinLirc);
     DDX_Text(pDX, IDC_EDIT2, m_UIceAddr);
     DDX_Control(pDX, IDC_EDIT2, m_UIceEdit);
-    DDX_Control(pDX, IDC_STATICLINK2, m_UIceLink);
     DDX_Check(pDX, IDC_CHECK9, m_fUIce);
     DDX_Check(pDX, IDC_CHECK2, m_fGlobalMedia);
 }
@@ -1508,6 +1506,9 @@ BOOL CPPageAccelTbl::OnInitDialog()
     m_list.SetColumnWidth(COL_CMD, LVSCW_AUTOSIZE);
     m_list.SetColumnWidth(COL_KEY, LVSCW_AUTOSIZE);
     m_list.SetColumnWidth(COL_ID, LVSCW_AUTOSIZE_USEHEADER);
+
+    m_WinLircLink.ConvertStaticToHyperlink(m_hWnd, IDC_STATICLINK, _T("http://winlirc.sourceforge.net/"));
+    m_UIceLink.ConvertStaticToHyperlink(m_hWnd, IDC_STATICLINK2, _T("http://www.mediatexx.com/"));
 
     // subclass the keylist control
     OldControlProc = (WNDPROC)SetWindowLongPtr(m_list.m_hWnd, GWLP_WNDPROC, (LONG_PTR)ControlProc);

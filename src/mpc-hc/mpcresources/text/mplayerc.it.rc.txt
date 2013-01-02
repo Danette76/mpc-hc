@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"Informazioni"
 8		"Copyright © 2002-2013 vedi file Authors.txt"
 10		"Version :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"Compilatore MPC-HC:"
 14		"Compilatore FFmpeg:"
 18		"Traduzione italiana di SigiTM"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

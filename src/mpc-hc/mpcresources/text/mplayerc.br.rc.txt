@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"Sobre"
 8		"Copyright © 2002-2013 - veja o arquivo Authors.txt"
 10		"Versão :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"Compilador do MPC-HC :"
 14		"Compilador do FFmpeg :"
 18		"Traduzido para o Português por Roger Filipe (2010)"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

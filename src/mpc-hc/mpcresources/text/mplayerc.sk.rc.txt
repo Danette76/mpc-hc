@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"O programe"
 8		"Copyright © 2002-2013 viď súbor Authors.txt"
 10		"Verzia :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"Kompilátor MPC-HC :"
 14		"Kompilátor FFmpeg :"
 18		"Preložil: Marián Hikaník"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

@@ -23,7 +23,8 @@
 
 #include "PPageBase.h"
 #include "FloatEdit.h"
-#include "StaticLink.h"
+#include "hyperlink.h"
+#include "resource.h"
 
 
 // CPPageWebServer dialog
@@ -46,7 +47,7 @@ public:
     BOOL m_fEnableWebServer;
     int m_nWebServerPort;
     CIntEdit m_nWebServerPortCtrl;
-    CStaticLink m_launch;
+    CHyperLink m_launch;
     BOOL m_fWebServerPrintDebugInfo;
     BOOL m_fWebServerUseCompression;
     BOOL m_fWebServerLocalhostOnly;

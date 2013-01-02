@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"バージョン情報"
 8		"Copyright © 2002-2013 (Authors.txt ファイルを参照)"
 10		"バージョン :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"MPC-HC コンパイラ :"
 14		"FFmpeg コンパイラ :"
 18		"Japanese translation made by Anonymous@2ch"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

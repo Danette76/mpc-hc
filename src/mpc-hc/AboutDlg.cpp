@@ -20,6 +20,7 @@
 
 #include "stdafx.h"
 #include "AboutDlg.h"
+#include "hyperlink.h"
 #ifndef MPCHC_LITE
 #include "InternalFiltersConfig.h" // needed for HAS_FFMPEG
 #endif
@@ -116,6 +117,8 @@ BOOL CAboutDlg::OnInitDialog()
     GetDlgItem(IDC_FFMPEG_COMPILER)->ShowWindow(SW_HIDE);
 #endif
 
+    m_HomepageLink.ConvertStaticToHyperlink(m_hWnd, IDC_HOMEPAGE_LINK, _T("http://mpc-hc.sourceforge.net/"));
+
     // Build the path to Authors.txt
     m_AuthorsPath = GetProgramPath() + _T("Authors.txt");
     // Check if the file exists
@@ -123,6 +126,7 @@ BOOL CAboutDlg::OnInitDialog()
         // If it does, we make the filename clickable
         m_credits.Replace(_T("Authors.txt"), _T("<a>Authors.txt</a>"));
     }
+
 
     UpdateData(FALSE);
 
@@ -150,15 +154,8 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
     //{{AFX_MSG_MAP(CAboutDlg)
     // No message handlers
     //}}AFX_MSG_MAP
-    ON_NOTIFY(NM_CLICK, IDC_HOMEPAGE_LINK, OnHomepage)
     ON_NOTIFY(NM_CLICK, IDC_AUTHORS_LINK, OnAuthors)
 END_MESSAGE_MAP()
-
-void CAboutDlg::OnHomepage(NMHDR* pNMHDR, LRESULT* pResult)
-{
-    ShellExecute(m_hWnd, _T("open"), _T("http://mpc-hc.sourceforge.net/"), NULL, NULL, SW_SHOWDEFAULT);
-    *pResult = 0;
-}
 
 void CAboutDlg::OnAuthors(NMHDR* pNMHDR, LRESULT* pResult)
 {

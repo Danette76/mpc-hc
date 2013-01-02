@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"Honi buruz"
 8		"Copyrighta © 2002-2013 ikusi Authors.txt"
 10		"Bertsioa :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"MPC-HC Biltzailea :"
 14		"FFmpeg Biltzailea :"
 18		"Euskarazko itzulpena: Xabier Aramendi"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

@@ -21,9 +21,10 @@
 
 #pragma once
 
+#include "resource.h"
 #include "PPageBase.h"
 #include "PlayerListCtrl.h"
-#include "StaticLink.h"
+#include "hyperlink.h"
 #include "WinHotkeyCtrl.h"
 #include "vkCodes.h"
 
@@ -67,11 +68,11 @@ public:
     BOOL m_fWinLirc;
     CString m_WinLircAddr;
     CEdit m_WinLircEdit;
-    CStaticLink m_WinLircLink;
+    CHyperLink m_WinLircLink;
     BOOL m_fUIce;
     CString m_UIceAddr;
     CEdit m_UIceEdit;
-    CStaticLink m_UIceLink;
+    CHyperLink m_UIceLink;
     BOOL m_fGlobalMedia;
 
 protected:

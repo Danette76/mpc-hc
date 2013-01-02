@@ -84,6 +84,9 @@
     <ClCompile Include="GoToDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hyperlink.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Ifo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -288,9 +291,6 @@
     <ClCompile Include="ShockwaveGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StaticLink.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StatusLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -432,6 +432,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GoToDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hyperlink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ifo.h">
@@ -651,9 +654,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShockwaveGraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticLink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StatusLabel.h">

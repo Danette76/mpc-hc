@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"Про програму"
 8		"Copyright © 2002-2013, див. файл Authors.txt"
 10		"Версія :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"MPC-HC Компілятор :"
 14		"FFmpeg Компілятор :"
 18		"Локалізація: Ihor Bobalo (http://www.eleks.com)"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"О программе"
 8		"Copyright © 2002-2013, смотрите файл Authors.txt"
 10		"Version :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"Компилятор MPC-HC:"
 14		"Компилятор FFmpeg:"
 18		"Локализация: YDY (http://mpc.darkhost.ru)"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"Hakkında"
 8		"Telif Hakkı © 2002-2013, Authors.txt dosyasına bakınız"
 10		"Version :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"MPC-HC Derlemesi :"
 14		"FFmpeg Derlemesi :"
 18		"bosluk (Sinan Hunerel) tarafından Türkçeleştirilmiştir"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

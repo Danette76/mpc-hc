@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"정보"
 8		"Copyright © 2002-2013 'Authors.txt' 파일 참조"
 10		"Version :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"MPC-HC 컴파일러 :"
 14		"FFmpeg 컴파일러 :"
 18		"한글번역제공: XNeo(xneokr@naver.com)"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

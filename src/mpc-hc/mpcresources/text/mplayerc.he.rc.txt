@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"אודות"
 8		"כל הזכויות שמורות © 2002-2013 קרא את קובץ היוצרים (Authors.txt)"
 10		"Version :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"מהדר MPC-HC :"
 14		"מהדר FFmpeg :"
 18		"תרגום עברי ע""י Superb"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

@@ -22,6 +22,7 @@
 
 #include <afxwin.h>
 #include "resource.h"
+#include "hyperlink.h"
 
 class CAboutDlg : public CDialog
 {
@@ -41,7 +42,6 @@ public:
 
     virtual BOOL OnInitDialog();
 
-    afx_msg void OnHomepage(NMHDR* pNMHDR, LRESULT* pResult);
     afx_msg void OnAuthors(NMHDR* pNMHDR, LRESULT* pResult);
 
     // Dialog Data
@@ -61,4 +61,6 @@ protected:
     // No message handlers
     //}}AFX_MSG
     DECLARE_MESSAGE_MAP()
+private:
+    CHyperLink m_HomepageLink;
 };

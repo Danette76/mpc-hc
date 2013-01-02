@@ -100,6 +100,11 @@ MPC-HC makes use of the following third-party code:
         <td>http://www.ffmpeg.org/</td>
     </tr>
     <tr>
+        <td>hyperlink</td>
+        <td>-</td>
+        <td>http://www.olivierlanglois.net/cpp_hyperlink_control2.htm</td>
+    </tr>
+    <tr>
         <td>libflac</td>
         <td>GPLv2 / New BSD License</td>
         <td>http://flac.sourceforge.net/</td>

@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"En quant a"
 8		"Copyright © 2002-2013 veure l'arxiu Authors.txt"
 10		"Compilació nº :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"Compilador MPC-HC :"
 14		"Compilador FFmpeg :"
 18		"Traducció al català per en PAPU."
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

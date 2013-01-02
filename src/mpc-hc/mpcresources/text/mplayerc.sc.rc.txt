@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"关于"
 8		"版权所有 © 2002-2013 请查看 Authors.txt"
 10		"版本 :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"MPC-HC 编译器: "
 14		"FFmpeg 编译器: "
 18		"简体中文翻译调整：风影幻想和酷剑菲心"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10

@@ -34,7 +34,7 @@ CPPageWebServer::CPPageWebServer()
     : CPPageBase(CPPageWebServer::IDD, CPPageWebServer::IDD)
     , m_fEnableWebServer(FALSE)
     , m_nWebServerPort(0)
-    , m_launch(_T("http://localhost:13579/"))
+    , m_launch()
     , m_fWebServerPrintDebugInfo(FALSE)
     , m_fWebServerUseCompression(FALSE)
     , m_fWebRoot(FALSE)
@@ -55,7 +55,6 @@ void CPPageWebServer::DoDataExchange(CDataExchange* pDX)
     DDX_Check(pDX, IDC_CHECK1, m_fEnableWebServer);
     DDX_Text(pDX, IDC_EDIT1, m_nWebServerPort);
     DDX_Control(pDX, IDC_EDIT1, m_nWebServerPortCtrl);
-    DDX_Control(pDX, IDC_STATIC1, m_launch);
     DDX_Check(pDX, IDC_CHECK2, m_fWebServerPrintDebugInfo);
     DDX_Check(pDX, IDC_CHECK3, m_fWebServerUseCompression);
     DDX_Check(pDX, IDC_CHECK4, m_fWebRoot);
@@ -67,7 +66,7 @@ void CPPageWebServer::DoDataExchange(CDataExchange* pDX)
 
 BOOL CPPageWebServer::PreTranslateMessage(MSG* pMsg)
 {
-    if (pMsg->message == WM_LBUTTONDOWN && pMsg->hwnd == m_launch.m_hWnd) {
+    if (pMsg->message == WM_LBUTTONDOWN /*&& pMsg->hwnd == m_launch.m_hWnd*/) {
         UpdateData();
 
         const CAppSettings& s = AfxGetAppSettings();
@@ -102,8 +101,8 @@ BOOL CPPageWebServer::OnInitDialog()
     m_WebDefIndex = s.strWebDefIndex;
     m_WebServerCGI = s.strWebServerCGI;
 
-    m_launch.EnableWindow(m_fEnableWebServer);
-
+    //m_launch.EnableWindow(m_fEnableWebServer);
+    m_launch.ConvertStaticToHyperlink(m_hWnd, IDC_STATIC1, _T("http://localhost:13579/"));
     UpdateData(FALSE);
 
     OnEnChangeEdit1();
@@ -146,7 +145,8 @@ BOOL CPPageWebServer::OnApply()
         }
     }
 
-    m_launch.EnableWindow(m_fEnableWebServer);
+    //m_launch.EnableWindow(m_fEnableWebServer);
+    m_launch.ConvertStaticToHyperlink(m_hWnd, IDC_STATIC1, _T("http://localhost:13579/"));
 
     return __super::OnApply();
 }
@@ -250,7 +250,7 @@ void CPPageWebServer::OnEnChangeEdit1()
 
     CString link;
     link.Format(_T("http://localhost:%d/"), m_nWebServerPort);
-    m_launch.m_link = link;
+    m_launch.setURL(link);
 
     SetModified();
 }

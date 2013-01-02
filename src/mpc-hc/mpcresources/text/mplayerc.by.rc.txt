@@ -1,4 +1,4 @@
-BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
+BEGIN DIALOGEX IDD_ABOUTBOX LINES 20
 3		"Пра праграму"
 8		"Copyright © 2002-2013 глядзiце файл Authors.txt"
 10		"Версія :"
@@ -7,6 +7,7 @@ BEGIN DIALOGEX IDD_ABOUTBOX LINES 21
 13		"Кампiлятар MPC-HC :"
 14		"Кампiлятар FFmpeg :"
 18		"Лакалізацыя: Містэр Ш"
+19		"http://mpc-hc.sourceforge.net/"
 END
 
 BEGIN DIALOGEX IDD_ADDREGFILTER LINES 10
