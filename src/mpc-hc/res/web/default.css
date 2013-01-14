@@ -215,8 +215,8 @@ body,
 th,
 td,
 .sectionInfo {
-	font-family: Verdana, Arial, Helvetica, Sans-Serif;
-	font-size: 0.85em;
+	font-family: Arial, Verdana, Helvetica, Sans-Serif;
+	font-size: 0.90em;
 }
 
 .nobr {
@@ -267,7 +267,6 @@ img {
 }
 
 #menu td {
-	font-family: Sans-Serif;
 	font-size: 12px;
 	padding: 1px 5px;
 }
@@ -275,11 +274,6 @@ img {
 #controlbar,
 #menu {
 	background: #ECE6D4;
-}
-
-#statusbar td {
-	font-family: Sans-Serif;
-	font-size: 12px;
 }
 
 #statusbar,
