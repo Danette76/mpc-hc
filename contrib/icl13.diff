@@ -1,39 +1,8 @@
-diff --git a/build.bat b/build.bat
-index b38de6a..c895501 100644
---- a/build.bat
-+++ b/build.bat
-@@ -339,7 +339,7 @@ IF /I "%~2" == "Win32" (
- 
- PUSHD "%BIN_DIR%"
- 
--SET "PCKG_NAME=%NAME%.%MPCHC_VER%.%ARCH%"
-+SET "PCKG_NAME=%NAME%.%MPCHC_VER%.%ARCH%.ICL13"
- IF /I "%COMPILER%" == "VS2012" (SET "PCKG_NAME=%PCKG_NAME%.%COMPILER%")
- IF DEFINED MPCHC_LITE (SET "PCKG_NAME=%PCKG_NAME%.Lite")
- 
 diff --git a/distrib/mpc-hc_setup.iss b/distrib/mpc-hc_setup.iss
-index 2ffe7f8..7ab2881 100644
+index 6ea7124..d1cf649 100644
 --- a/distrib/mpc-hc_setup.iss
 +++ b/distrib/mpc-hc_setup.iss
-@@ -41,7 +41,7 @@
-     #define localize = "true"
-   #endif
- #endif
--#define sse_required
-+#define sse2_required
- 
- 
- ; From now on you shouldn't need to change anything
-@@ -73,6 +73,8 @@
-   #define OutFilename  = app_name + "." + app_version + ".x86"
- #endif
- 
-+#define OutFilename  = OutFilename + ".ICL13"
-+
- #if localize != "true" && defined(MPCHC_LITE)
-   #define OutFilename  = OutFilename + ".Lite"
- #elif localize != "true"
-@@ -90,15 +92,15 @@
+@@ -98,15 +98,15 @@
  
  #ifdef x64Build
    #ifdef MPCHC_LITE
@@ -67,7 +36,7 @@ index 7f064df..351fb48 100644
  
  
 diff --git a/src/common.props b/src/common.props
-index d1ae499..910b23b 100644
+index d1ae499..ffe6c8a 100644
 --- a/src/common.props
 +++ b/src/common.props
 @@ -46,11 +46,14 @@
@@ -179,7 +148,7 @@ index 09927fd..26091c9 100644
    </PropertyGroup>
  </Project>
 diff --git a/src/thirdparty/ffmpeg/Makefile b/src/thirdparty/ffmpeg/Makefile
-index 58b8a8d..ce8d7c7 100644
+index 2890235..2f05a16 100644
 --- a/src/thirdparty/ffmpeg/Makefile
 +++ b/src/thirdparty/ffmpeg/Makefile
 @@ -56,7 +56,7 @@ ifeq ($(64BIT),yes)

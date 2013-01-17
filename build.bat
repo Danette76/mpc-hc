@@ -86,6 +86,7 @@ FOR %%G IN (%ARG%) DO (
   IF /I "%%G" == "Silent"       SET "SILENT=True"        & SET /A VALID+=1
   IF /I "%%G" == "VS2010"       SET "COMPILER=VS2010"    & SET /A VALID+=1 & SET /A ARGCOMP+=1
   IF /I "%%G" == "VS2012"       SET "COMPILER=VS2012"    & SET /A VALID+=1 & SET /A ARGCOMP+=1
+  IF /I "%%G" == "ICL13"        SET "COMPILER=ICL13"     & SET /A VALID+=1 & SET /A ARGCOMP+=1
 )
 
 FOR %%G IN (%*) DO SET /A INPUT+=1
@@ -108,6 +109,9 @@ IF %ARGRE%   GTR 1 (GOTO UnsupportedSwitch)
 
 IF /I "%COMPILER%" == "VS2012" (
   IF NOT DEFINED VS110COMNTOOLS GOTO MissingVar
+) ELSE IF /I "%COMPILER%" == "ICL13" (
+  IF NOT DEFINED VS100COMNTOOLS  GOTO MissingVar
+  IF NOT DEFINED ICPP_COMPILER13 GOTO MissingVar
 ) ELSE (
   IF NOT DEFINED VS100COMNTOOLS GOTO MissingVar
 )
@@ -117,6 +121,9 @@ IF /I "%COMPILER%" == "VS2012" (
 IF /I "%COMPILER%" == "VS2012" (
   SET "BIN_DIR=bin12"
   SET "SLN_SUFFIX=_vs2012"
+) ELSE IF /I "%COMPILER%" == "ICL13" (
+  SET "BIN_DIR=bin"
+  SET "SLN_SUFFIX="
 ) ELSE (
   SET "BIN_DIR=bin"
   SET "SLN_SUFFIX="
@@ -154,6 +161,8 @@ REM Always use x86_amd64 compiler, even on 64bit windows, because this is what V
 IF /I "%PPLATFORM%" == "Win32" (SET ARCH=x86) ELSE (SET ARCH=x86_amd64)
 IF /I "%COMPILER%" == "VS2012" (
   CALL "%VS110COMNTOOLS%..\..\VC\vcvarsall.bat" %ARCH%
+) ELSE IF /I "%COMPILER%" == "ICL13" (
+  CALL "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" %ARCH%
 ) ELSE (
   CALL "%VS100COMNTOOLS%..\..\VC\vcvarsall.bat" %ARCH%
 )
@@ -300,7 +309,11 @@ IF /I "%~1" == "x64" (
   SET MPCHC_INNO_DEF=%MPCHC_INNO_DEF% /Dx64Build
   CALL :SubCopyDXDll x64
 ) ELSE CALL :SubCopyDXDll x86
-IF /I "%COMPILER%" == "VS2012" (SET MPCHC_INNO_DEF=%MPCHC_INNO_DEF% /DVS2012)
+IF /I "%COMPILER%" == "VS2012" (
+  SET MPCHC_INNO_DEF=%MPCHC_INNO_DEF% /DVS2012
+) ELSE IF /I "%COMPILER%" == "ICL13" (
+  SET MPCHC_INNO_DEF=%MPCHC_INNO_DEF% /DICL13
+)
 
 CALL :SubDetectInnoSetup
 
@@ -341,6 +354,7 @@ PUSHD "%BIN_DIR%"
 
 SET "PCKG_NAME=%NAME%.%MPCHC_VER%.%ARCH%"
 IF /I "%COMPILER%" == "VS2012" (SET "PCKG_NAME=%PCKG_NAME%.%COMPILER%")
+IF /I "%COMPILER%" == "ICL13"  (SET "PCKG_NAME=%PCKG_NAME%.%COMPILER%")
 IF DEFINED MPCHC_LITE (SET "PCKG_NAME=%PCKG_NAME%.Lite")
 
 IF EXIST "%PCKG_NAME%.7z"     DEL "%PCKG_NAME%.7z"
@@ -475,7 +489,7 @@ EXIT /B
 TITLE %~nx0 Help
 ECHO.
 ECHO Usage:
-ECHO %~nx0 [Clean^|Build^|Rebuild] [x86^|x64^|Both] [Main^|Resources^|MPCHC^|IconLib^|Translations^|Filters^|All] [Debug^|Release] [Lite] [Packages^|Installer^|Zip] [FFmpeg] [VS2010^|VS2012]
+ECHO %~nx0 [Clean^|Build^|Rebuild] [x86^|x64^|Both] [Main^|Resources^|MPCHC^|IconLib^|Translations^|Filters^|All] [Debug^|Release] [Lite] [Packages^|Installer^|Zip] [FFmpeg] [VS2010^|VS2012^|ICL13]
 ECHO.
 ECHO Notes: You can also prefix the commands with "-", "--" or "/".
 ECHO        Debug only applies to mpc-hc.sln.

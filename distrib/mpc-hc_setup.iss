@@ -30,6 +30,7 @@
 
 ; If you want to compile the 64-bit version define "x64build" (uncomment the define below or use build.bat)
 ;#define VS2012
+;#define ICL13
 ;#define x64Build
 ;#define MPCHC_LITE
 
@@ -41,7 +42,12 @@
     #define localize = "true"
   #endif
 #endif
+
+#if defined(ICL13)
+#define sse2_required
+#else
 #define sse_required
+#endif
 
 
 ; From now on you shouldn't need to change anything
@@ -79,7 +85,9 @@
   #define OutFilename  = OutFilename + ".en"
 #endif
 
-#if defined(VS2012)
+#if defined(ICL13)
+  #define OutFilename  = OutFilename + ".ICL13"
+#elif defined(VS2012)
   #define OutFilename  = OutFilename + ".VS2012"
 #endif
 
