@@ -85,10 +85,9 @@ private:
     ULONG                   m_ulMappedPID;
 
     void ClearMaps() {
-        HRESULT hr;
         CComPtr<IEnumPIDMap> pEnumMap;
 
-        if (SUCCEEDED(hr = m_pMap->EnumPIDMap(&pEnumMap))) {
+        if (SUCCEEDED(m_pMap->EnumPIDMap(&pEnumMap))) {
             PID_MAP maps[8];
             ULONG   nbPids = 0;
 

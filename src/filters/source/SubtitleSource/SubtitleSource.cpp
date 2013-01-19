@@ -415,13 +415,11 @@ HRESULT CSubtitleStream::DecideBufferSize(IMemAllocator* pAlloc, ALLOCATOR_PROPE
 
 HRESULT CSubtitleStream::FillBuffer(IMediaSample* pSample)
 {
-    HRESULT hr;
-
     {
         CAutoLock cAutoLockShared(&m_cSharedState);
 
         BYTE* pData = NULL;
-        if (FAILED(hr = pSample->GetPointer(&pData)) || !pData) {
+        if (FAILED(pSample->GetPointer(&pData)) || !pData) {
             return S_FALSE;
         }
 

@@ -267,8 +267,8 @@ HRESULT WINAPI Mine_CoCreateInstance(IN REFCLSID rclsid, IN LPUNKNOWN pUnkOuter,
             CMacrovisionKicker* pMK = DEBUG_NEW CMacrovisionKicker(NAME("CMacrovisionKicker"), NULL);
             CComPtr<IUnknown> pUnk = (IUnknown*)(INonDelegatingUnknown*)pMK;
             CComPtr<IUnknown> pInner;
-            HRESULT hr;
-            if (SUCCEEDED(hr = Real_CoCreateInstance(rclsid, pUnk, dwClsContext, __uuidof(IUnknown), (void**)&pInner))) {
+
+            if (SUCCEEDED(Real_CoCreateInstance(rclsid, pUnk, dwClsContext, __uuidof(IUnknown), (void**)&pInner))) {
                 pMK->SetInner(pInner);
                 return pUnk->QueryInterface(riid, ppv);
             }

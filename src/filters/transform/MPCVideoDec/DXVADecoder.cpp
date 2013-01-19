@@ -40,7 +40,7 @@
         nTry++;                                           \
     }
 
-CDXVADecoder::CDXVADecoder(CMPCVideoDecFilter* pFilter, IAMVideoAccelerator*  pAMVideoAccelerator, DXVAMode nMode, int nPicEntryNumber)
+CDXVADecoder::CDXVADecoder(CMPCVideoDecFilter* pFilter, IAMVideoAccelerator* pAMVideoAccelerator, DXVAMode nMode, int nPicEntryNumber)
 {
     m_nEngine             = ENGINE_DXVA1;
     m_pAMVideoAccelerator = pAMVideoAccelerator;
@@ -52,8 +52,10 @@ CDXVADecoder::CDXVADecoder(CMPCVideoDecFilter* pFilter, IAMVideoAccelerator*  pA
 
 CDXVADecoder::CDXVADecoder(CMPCVideoDecFilter* pFilter, IDirectXVideoDecoder* pDirectXVideoDec, DXVAMode nMode, int nPicEntryNumber, DXVA2_ConfigPictureDecode* pDXVA2Config)
 {
-    m_nEngine = ENGINE_DXVA2;
+    m_nEngine          = ENGINE_DXVA2;
     m_pDirectXVideoDec = pDirectXVideoDec;
+    m_dwBufferIndex    = 0;
+    m_nMaxWaiting      = 3;
     memcpy(&m_DXVA2Config, pDXVA2Config, sizeof(DXVA2_ConfigPictureDecode));
 
     Init(pFilter, nMode, nPicEntryNumber);

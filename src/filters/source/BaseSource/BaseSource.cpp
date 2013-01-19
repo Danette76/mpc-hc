@@ -141,9 +141,8 @@ HRESULT CBaseStream::OnThreadCreate()
 
 HRESULT CBaseStream::FillBuffer(IMediaSample* pSample)
 {
-    HRESULT hr;
-
     {
+        HRESULT hr;
         CAutoLock cAutoLockShared(&m_cSharedState);
 
         if (m_rtPosition >= m_rtStop) {
