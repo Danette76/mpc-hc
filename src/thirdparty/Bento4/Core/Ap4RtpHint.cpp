@@ -2,7 +2,7 @@
 |
 |    AP4 - RTP Hint Objects
 |
-|    Copyright 2002-2005 Gilles Boccon-Gibod & Julien Boeuf
+|    Copyright 2002-2008 Axiomatic Systems, LLC
 |
 |
 |    This file is part of Bento4/AP4 (MP4 Atom Processing Library).
@@ -26,15 +26,14 @@
 |
 ****************************************************************/
 /*----------------------------------------------------------------------
-|       includes
+|   includes
 +---------------------------------------------------------------------*/
-#include "Ap4.h"
 #include "Ap4RtpHint.h"
 #include "Ap4ByteStream.h"
 #include "Ap4Atom.h"
 
 /*----------------------------------------------------------------------
-|       AP4_RtpSampleData::~AP4_RtpSampleData
+|   AP4_RtpSampleData::~AP4_RtpSampleData
 +---------------------------------------------------------------------*/
 AP4_RtpSampleData::~AP4_RtpSampleData()
 {
@@ -46,12 +45,12 @@ AP4_RtpSampleData::~AP4_RtpSampleData()
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpSampleData::AP4_RtpSampleData
+|   AP4_RtpSampleData::AP4_RtpSampleData
 +---------------------------------------------------------------------*/
-AP4_RtpSampleData::AP4_RtpSampleData(AP4_ByteStream& stream, AP4_Size size)
+AP4_RtpSampleData::AP4_RtpSampleData(AP4_ByteStream& stream, AP4_UI32 size)
 {
     // save the start position
-    AP4_Offset start, extra_data_start;
+    AP4_Position start, extra_data_start;
     stream.Tell(start);
 
     AP4_UI16 packet_count;
@@ -68,7 +67,7 @@ AP4_RtpSampleData::AP4_RtpSampleData(AP4_ByteStream& stream, AP4_Size size)
 
     // extra data
     stream.Tell(extra_data_start);
-    AP4_Size extra_data_size = size - (extra_data_start-start);
+    AP4_Size extra_data_size = size - (AP4_UI32)(extra_data_start-start);
     if (extra_data_size != 0) {
         m_ExtraData.SetDataSize(extra_data_size);
         stream.Read(m_ExtraData.UseData(), extra_data_size);
@@ -76,7 +75,7 @@ AP4_RtpSampleData::AP4_RtpSampleData(AP4_ByteStream& stream, AP4_Size size)
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpSampleData::GetSize
+|   AP4_RtpSampleData::GetSize
 +---------------------------------------------------------------------*/
 AP4_Size
 AP4_RtpSampleData::GetSize()
@@ -98,7 +97,7 @@ AP4_RtpSampleData::GetSize()
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpSampleData::ToByteStream
+|   AP4_RtpSampleData::ToByteStream
 +---------------------------------------------------------------------*/
 AP4_ByteStream*
 AP4_RtpSampleData::ToByteStream()
@@ -117,13 +116,13 @@ AP4_RtpSampleData::ToByteStream()
     if (AP4_FAILED(result)) goto bail;
 
     {
-		AP4_List<AP4_RtpPacket>::Item* it = m_Packets.FirstItem();
-		while (it != NULL) {
-			result = it->GetData()->Write(*stream);
-			if (AP4_FAILED(result)) goto bail;
-			it = it->GetNext();
-		}
-	}
+        AP4_List<AP4_RtpPacket>::Item* it = m_Packets.FirstItem();
+        while (it != NULL) {
+            result = it->GetData()->Write(*stream);
+            if (AP4_FAILED(result)) goto bail;
+            it = it->GetNext();
+        }
+    }
 
     result = stream->Write(m_ExtraData.GetData(), m_ExtraData.GetDataSize());
     if (AP4_FAILED(result)) goto bail;
@@ -138,7 +137,7 @@ bail:
 
 
 /*----------------------------------------------------------------------
-|       AP4_RtpSampleData::AddPacket
+|   AP4_RtpSampleData::AddPacket
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_RtpSampleData::AddPacket(AP4_RtpPacket* packet)
@@ -148,17 +147,17 @@ AP4_RtpSampleData::AddPacket(AP4_RtpPacket* packet)
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpPacket::AP4_RtpPacket
+|   AP4_RtpPacket::AP4_RtpPacket
 +---------------------------------------------------------------------*/
-AP4_RtpPacket::AP4_RtpPacket(AP4_Integer relative_time, 
-                             bool p_bit, 
-                             bool x_bit, 
-                             bool m_bit, 
+AP4_RtpPacket::AP4_RtpPacket(int      relative_time, 
+                             bool     p_bit, 
+                             bool     x_bit, 
+                             bool     m_bit, 
                              AP4_UI08 payload_type, 
                              AP4_UI16 sequence_seed, 
-                             AP4_Integer time_stamp_offset /* = 0 */,
-                             bool bframe_flag /* = false */, 
-                             bool repeat_flag /* = false */) :
+                             int      time_stamp_offset /* = 0 */,
+                             bool     bframe_flag /* = false */, 
+                             bool     repeat_flag /* = false */) :
     m_ReferenceCount(1),
     m_RelativeTime(relative_time),
     m_PBit(p_bit),
@@ -172,7 +171,7 @@ AP4_RtpPacket::AP4_RtpPacket(AP4_Integer relative_time,
 {}
 
 /*----------------------------------------------------------------------
-|       AP4_RtpPacket::AP4_RtpPacket
+|   AP4_RtpPacket::AP4_RtpPacket
 +---------------------------------------------------------------------*/
 AP4_RtpPacket::AP4_RtpPacket(AP4_ByteStream& stream) :
     m_ReferenceCount(1),
@@ -218,8 +217,7 @@ AP4_RtpPacket::AP4_RtpPacket(AP4_ByteStream& stream) :
         stream.ReadUI32(extra_length);
 
         // check it 
-        if (extra_length < 4) 
-            throw AP4_Exception(AP4_ERROR_INVALID_RTP_PACKET_EXTRA_DATA);
+        if (extra_length < 4) return;
 
         // now read the entries
         extra_length -= 4;
@@ -230,9 +228,7 @@ AP4_RtpPacket::AP4_RtpPacket(AP4_ByteStream& stream) :
             stream.ReadUI32(entry_tag);
 
             // check the entry
-            if (entry_length < 8) {
-                throw AP4_Exception(AP4_ERROR_INVALID_RTP_PACKET_EXTRA_DATA);
-            }
+            if (entry_length < 8) return;
 
             // parse the single entry that's currently defined in the spec
             if (entry_tag == AP4_ATOM_TYPE('r','t','p','o') && entry_length == 12) {
@@ -241,7 +237,7 @@ AP4_RtpPacket::AP4_RtpPacket(AP4_ByteStream& stream) :
                 m_TimeStampOffset = time_stamp_offset;
             } else {
                 // ignore it
-                AP4_Offset cur_pos;
+                AP4_Position cur_pos;
                 stream.Tell(cur_pos);
                 stream.Seek(cur_pos + entry_length - 8); // 8 = length + tag
             }
@@ -259,7 +255,7 @@ AP4_RtpPacket::AP4_RtpPacket(AP4_ByteStream& stream) :
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpPacket::AP4_RtpPacket
+|   AP4_RtpPacket::AP4_RtpPacket
 +---------------------------------------------------------------------*/
 AP4_RtpPacket::~AP4_RtpPacket()
 {
@@ -271,7 +267,7 @@ AP4_RtpPacket::~AP4_RtpPacket()
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpPacket::AddReference
+|   AP4_RtpPacket::AddReference
 +---------------------------------------------------------------------*/
 void
 AP4_RtpPacket::AddReference()
@@ -280,7 +276,7 @@ AP4_RtpPacket::AddReference()
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpPacket::Release
+|   AP4_RtpPacket::Release
 +---------------------------------------------------------------------*/
 void
 AP4_RtpPacket::Release()
@@ -291,7 +287,7 @@ AP4_RtpPacket::Release()
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpPacket::GetSize
+|   AP4_RtpPacket::GetSize
 +---------------------------------------------------------------------*/
 AP4_Size
 AP4_RtpPacket::GetSize()
@@ -302,7 +298,7 @@ AP4_RtpPacket::GetSize()
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpPacket::Write
+|   AP4_RtpPacket::Write
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_RtpPacket::Write(AP4_ByteStream& stream) 
@@ -363,7 +359,7 @@ AP4_RtpPacket::Write(AP4_ByteStream& stream)
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpPacket::AddConstructor
+|   AP4_RtpPacket::AddConstructor
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_RtpPacket::AddConstructor(AP4_RtpConstructor* constructor) 
@@ -373,7 +369,7 @@ AP4_RtpPacket::AddConstructor(AP4_RtpConstructor* constructor)
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpConstructor::GetConstructedDataSize
+|   AP4_RtpConstructor::GetConstructedDataSize
 +---------------------------------------------------------------------*/
 AP4_Size
 AP4_RtpPacket::GetConstructedDataSize()
@@ -394,7 +390,7 @@ AP4_RtpPacket::GetConstructedDataSize()
 
 
 /*----------------------------------------------------------------------
-|       AP4_RtpConstructor::AddReference
+|   AP4_RtpConstructor::AddReference
 +---------------------------------------------------------------------*/
 void
 AP4_RtpConstructor::AddReference()
@@ -403,7 +399,7 @@ AP4_RtpConstructor::AddReference()
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpConstructor::Release
+|   AP4_RtpConstructor::Release
 +---------------------------------------------------------------------*/
 void
 AP4_RtpConstructor::Release()
@@ -413,7 +409,7 @@ AP4_RtpConstructor::Release()
     }
 }
 /*----------------------------------------------------------------------
-|       AP4_RtpConstructor::Write
+|   AP4_RtpConstructor::Write
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_RtpConstructor::Write(AP4_ByteStream& stream)
@@ -425,18 +421,18 @@ AP4_RtpConstructor::Write(AP4_ByteStream& stream)
 }
 
 /*----------------------------------------------------------------------
-|       AP4_NoopRtpConstructor::AP4_NoopRtpConstructor
+|   AP4_NoopRtpConstructor::AP4_NoopRtpConstructor
 +---------------------------------------------------------------------*/
 AP4_NoopRtpConstructor::AP4_NoopRtpConstructor(AP4_ByteStream& stream) :
     AP4_RtpConstructor(AP4_RTP_CONSTRUCTOR_TYPE_NOOP)
 {
-    AP4_Offset cur_offset;
+    AP4_Position cur_offset;
     stream.Tell(cur_offset);
     stream.Seek(cur_offset+15);
 }
 
 /*----------------------------------------------------------------------
-|       AP4_NoopRtpConstructor::DoWrite
+|   AP4_NoopRtpConstructor::DoWrite
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_NoopRtpConstructor::DoWrite(AP4_ByteStream& stream)
@@ -447,7 +443,7 @@ AP4_NoopRtpConstructor::DoWrite(AP4_ByteStream& stream)
 }
 
 /*----------------------------------------------------------------------
-|       AP4_ImmediateRtpConstructor::AP4_ImmediateRtpConstructor
+|   AP4_ImmediateRtpConstructor::AP4_ImmediateRtpConstructor
 +---------------------------------------------------------------------*/
 AP4_ImmediateRtpConstructor::AP4_ImmediateRtpConstructor(const AP4_DataBuffer& data) :
     AP4_RtpConstructor(AP4_RTP_CONSTRUCTOR_TYPE_IMMEDIATE),
@@ -455,12 +451,12 @@ AP4_ImmediateRtpConstructor::AP4_ImmediateRtpConstructor(const AP4_DataBuffer& d
 {}
 
 /*----------------------------------------------------------------------
-|       AP4_ImmediateRtpConstructor::AP4_ImmediateRtpConstructor
+|   AP4_ImmediateRtpConstructor::AP4_ImmediateRtpConstructor
 +---------------------------------------------------------------------*/
 AP4_ImmediateRtpConstructor::AP4_ImmediateRtpConstructor(AP4_ByteStream& stream) :
     AP4_RtpConstructor(AP4_RTP_CONSTRUCTOR_TYPE_IMMEDIATE)
 {
-    AP4_Offset cur_offset;
+    AP4_Position cur_offset;
     stream.Tell(cur_offset);
 
     // data
@@ -475,7 +471,7 @@ AP4_ImmediateRtpConstructor::AP4_ImmediateRtpConstructor(AP4_ByteStream& stream)
 
 
 /*----------------------------------------------------------------------
-|       AP4_ImmediateRtpConstructor::DoWrite
+|   AP4_ImmediateRtpConstructor::DoWrite
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_ImmediateRtpConstructor::DoWrite(AP4_ByteStream& stream)
@@ -495,7 +491,7 @@ AP4_ImmediateRtpConstructor::DoWrite(AP4_ByteStream& stream)
     return stream.Write(pad, sizeof(pad)-m_Data.GetDataSize());
 }
 /*----------------------------------------------------------------------
-|       AP4_SampleRtpConstructor::AP4_SampleRtpConstructor
+|   AP4_SampleRtpConstructor::AP4_SampleRtpConstructor
 +---------------------------------------------------------------------*/
 AP4_SampleRtpConstructor::AP4_SampleRtpConstructor(AP4_UI08 track_ref_index, 
                                                    AP4_UI16 length, 
@@ -509,13 +505,13 @@ AP4_SampleRtpConstructor::AP4_SampleRtpConstructor(AP4_UI08 track_ref_index,
 {}
 
 /*----------------------------------------------------------------------
-|       AP4_SampleRtpConstructor::AP4_SampleRtpConstructor
+|   AP4_SampleRtpConstructor::AP4_SampleRtpConstructor
 +---------------------------------------------------------------------*/
 AP4_SampleRtpConstructor::AP4_SampleRtpConstructor(AP4_ByteStream& stream) :
     AP4_RtpConstructor(AP4_RTP_CONSTRUCTOR_TYPE_SAMPLE)
 {
     // offset
-    AP4_Offset cur_offset;
+    AP4_Position cur_offset;
     stream.Tell(cur_offset);
 
     // data
@@ -528,7 +524,7 @@ AP4_SampleRtpConstructor::AP4_SampleRtpConstructor(AP4_ByteStream& stream) :
     stream.Seek(cur_offset+15);
 }
 /*----------------------------------------------------------------------
-|       AP4_SampleRtpConstructor::DoWrite
+|   AP4_SampleRtpConstructor::DoWrite
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_SampleRtpConstructor::DoWrite(AP4_ByteStream& stream)
@@ -552,7 +548,7 @@ AP4_SampleRtpConstructor::DoWrite(AP4_ByteStream& stream)
 }
 
 /*----------------------------------------------------------------------
-|       AP4_SampleDescRtpConstructor::AP4_SampleDescRtpConstructor
+|   AP4_SampleDescRtpConstructor::AP4_SampleDescRtpConstructor
 +---------------------------------------------------------------------*/
 AP4_SampleDescRtpConstructor::AP4_SampleDescRtpConstructor(AP4_UI08 track_ref_index, 
                                                            AP4_UI16 length, 
@@ -566,13 +562,13 @@ AP4_SampleDescRtpConstructor::AP4_SampleDescRtpConstructor(AP4_UI08 track_ref_in
 {}
 
 /*----------------------------------------------------------------------
-|       AP4_SampleDescRtpConstructor::AP4_SampleDescRtpConstructor
+|   AP4_SampleDescRtpConstructor::AP4_SampleDescRtpConstructor
 +---------------------------------------------------------------------*/
 AP4_SampleDescRtpConstructor::AP4_SampleDescRtpConstructor(AP4_ByteStream& stream) :
     AP4_RtpConstructor(AP4_RTP_CONSTRUCTOR_TYPE_SAMPLE_DESC)
 {
     // offset
-    AP4_Offset cur_offset;
+    AP4_Position cur_offset;
     stream.Tell(cur_offset);
 
     // data
@@ -586,7 +582,7 @@ AP4_SampleDescRtpConstructor::AP4_SampleDescRtpConstructor(AP4_ByteStream& strea
 }
 
 /*----------------------------------------------------------------------
-|       AP4_SampleDescRtpConstructor::DoWrite
+|   AP4_SampleDescRtpConstructor::DoWrite
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_SampleDescRtpConstructor::DoWrite(AP4_ByteStream& stream)
@@ -607,7 +603,7 @@ AP4_SampleDescRtpConstructor::DoWrite(AP4_ByteStream& stream)
 }
 
 /*----------------------------------------------------------------------
-|       AP4_RtpConstructorFactory::CreateConstructorFromStream
+|   AP4_RtpConstructorFactory::CreateConstructorFromStream
 +---------------------------------------------------------------------*/
 AP4_Result
 AP4_RtpConstructorFactory::CreateConstructorFromStream(AP4_ByteStream& stream, 
@@ -618,6 +614,7 @@ AP4_RtpConstructorFactory::CreateConstructorFromStream(AP4_ByteStream& stream,
     AP4_Result result = stream.ReadUI08(type);
     if (AP4_FAILED(result)) return result;
 
+    // now create the right constructor
     switch(type) {
         case AP4_RTP_CONSTRUCTOR_TYPE_NOOP:
             constructor = new AP4_NoopRtpConstructor(stream);

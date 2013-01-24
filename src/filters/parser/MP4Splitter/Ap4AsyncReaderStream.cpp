@@ -1,6 +1,6 @@
 /*
  * (C) 2003-2006 Gabest
- * (C) 2006-2012 see Authors.txt
+ * (C) 2006-2013 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -48,13 +48,13 @@ void AP4_AsyncReaderStream::Release()
     }
 }
 
-AP4_Result AP4_AsyncReaderStream::Read(void* buffer, AP4_Size bytesToRead, AP4_Size* bytesRead)
+AP4_Result AP4_AsyncReaderStream::ReadPartial(void* buffer, AP4_Size bytesToRead, AP4_Size& bytesRead)
 {
     __int64 bytesAvail = m_pFile->GetRemaining();
 
-    if (bytesAvail < (LONGLONG)bytesToRead) {
+    if (bytesAvail < bytesToRead) {
         if (bytesRead) {
-            *bytesRead = bytesAvail;
+            bytesRead = bytesAvail;
         }
         bytesToRead = bytesAvail;
     }
@@ -65,37 +65,37 @@ AP4_Result AP4_AsyncReaderStream::Read(void* buffer, AP4_Size bytesToRead, AP4_S
 
     if (FAILED(m_pFile->ByteRead((BYTE*)buffer, bytesToRead))) {
         if (bytesRead) {
-            *bytesRead = 0;
+            bytesRead = 0;
         }
         return AP4_ERROR_READ_FAILED;
     }
 
     if (bytesRead) {
-        *bytesRead = bytesToRead;
+        bytesRead = bytesToRead;
     }
 
     return AP4_SUCCESS;
 }
 
-AP4_Result AP4_AsyncReaderStream::Write(const void* buffer, AP4_Size bytesToWrite, AP4_Size* bytesWritten)
+AP4_Result AP4_AsyncReaderStream::WritePartial(const void* buffer, AP4_Size bytesToWrite, AP4_Size& bytesWritten)
 {
     return AP4_ERROR_WRITE_FAILED;
 }
 
-AP4_Result AP4_AsyncReaderStream::Seek(AP4_Offset offset)
+AP4_Result AP4_AsyncReaderStream::Seek(AP4_Position offset)
 {
     m_pFile->Seek(offset);
     return m_pFile->GetPos() == offset ? AP4_SUCCESS : AP4_FAILURE;
 }
 
-AP4_Result AP4_AsyncReaderStream::Tell(AP4_Offset& offset)
+AP4_Result AP4_AsyncReaderStream::Tell(AP4_Position& offset)
 {
     offset = (AP4_Offset)m_pFile->GetPos();
     return AP4_SUCCESS;
 }
 
-AP4_Result AP4_AsyncReaderStream::GetSize(AP4_Size& size)
+AP4_Result AP4_AsyncReaderStream::GetSize(AP4_LargeSize& size)
 {
-    size = (AP4_Size)m_pFile->GetLength();
+    size = m_pFile->GetLength();
     return AP4_SUCCESS;
 }

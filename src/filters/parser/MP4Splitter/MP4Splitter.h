@@ -1,6 +1,6 @@
 /*
  * (C) 2003-2006 Gabest
- * (C) 2006-2012 see Authors.txt
+ * (C) 2006-2013 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -33,7 +33,7 @@ class __declspec(uuid("61F47056-E400-43d3-AF1E-AB7DFFD4C4AD"))
     CMP4SplitterFilter : public CBaseSplitterFilter
 {
     struct trackpos {
-        DWORD /*AP4_Ordinal*/ index;
+        unsigned int /*AP4_Ordinal*/ index;
         unsigned __int64 /*AP4_TimeStamp*/ ts;
     };
     CAtlMap<DWORD, trackpos> m_trackpos;
