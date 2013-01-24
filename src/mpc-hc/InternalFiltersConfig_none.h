@@ -1,5 +1,5 @@
 /*
- * (C) 2012 see Authors.txt
+ * (C) 2012-2013 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -27,7 +27,6 @@
 #define INTERNAL_SOURCEFILTER_DSM       0
 #define INTERNAL_SOURCEFILTER_DTSAC3    0
 #define INTERNAL_SOURCEFILTER_VTS       0
-#define INTERNAL_SOURCEFILTER_DVSOURCE  0
 #define INTERNAL_SOURCEFILTER_FLIC      0
 #define INTERNAL_SOURCEFILTER_FLAC      0
 #define INTERNAL_SOURCEFILTER_FLV       0

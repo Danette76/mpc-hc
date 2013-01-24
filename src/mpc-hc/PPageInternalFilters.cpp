@@ -1,6 +1,6 @@
 /*
  * (C) 2003-2006 Gabest
- * (C) 2006-2012 see Authors.txt
+ * (C) 2006-2013 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -45,9 +45,6 @@ static filter_t s_filters[] = {
 #endif
 #if INTERNAL_SOURCEFILTER_VTS
     {_T("DVD Video Title Set"), SOURCE_FILTER, SRC_VTS, IDS_SRC_VTS, NULL},
-#endif
-#if INTERNAL_SOURCEFILTER_DVSOURCE
-    {_T("DVD2AVI Project File"), SOURCE_FILTER, SRC_D2V, 0, NULL},
 #endif
 #if INTERNAL_SOURCEFILTER_FLIC
     {_T("FLI/FLC"), SOURCE_FILTER, SRC_FLIC, 0, NULL},

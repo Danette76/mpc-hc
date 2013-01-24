@@ -1,6 +1,6 @@
 /*
  * (C) 2003-2006 Gabest
- * (C) 2006-2012 see Authors.txt
+ * (C) 2006-2013 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -40,7 +40,6 @@
 #include "reader/VTSReader/VTSReader.h"
 #include "renderer/MpcAudioRenderer/MpcAudioRenderer.h"
 #include "renderer/SyncClock/SyncClock.h"
-#include "source/D2VSource/D2VSource.h"
 #include "source/DTSAC3Source/DTSAC3Source.h"
 #include "source/FLACSource/FLACSource.h"
 #include "source/FLICSource/FLICSource.h"
