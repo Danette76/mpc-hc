@@ -70,6 +70,7 @@ MediaInfo_Config_MediaInfo::MediaInfo_Config_MediaInfo()
         NextPacket=false;
     #endif //MEDIAINFO_NEXTPACKET
     #if MEDIAINFO_FILTER
+        File_Filter_Audio=false;
         File_Filter_HasChanged_=false;
     #endif //MEDIAINFO_FILTER
     #if MEDIAINFO_EVENTS
@@ -81,6 +82,8 @@ MediaInfo_Config_MediaInfo::MediaInfo_Config_MediaInfo()
     #if MEDIAINFO_DEMUX
         Demux_ForceIds=false;
         Demux_PCM_20bitTo16bit=false;
+        Demux_PCM_20bitTo24bit=false;
+        Demux_Avc_Transcode_Iso14496_15_to_Iso14496_10=false;
         Demux_Unpacketize=false;
         Demux_Rate=0;
         Demux_FirstDts=(int64u)-1;
@@ -321,8 +324,12 @@ Ztring MediaInfo_Config_MediaInfo::Option (const String &Option, const String &V
     else if (Option_Lower==__T("file_filter"))
     {
         #if MEDIAINFO_FILTER
-            File_Filter_Set(Ztring(Value).To_int64u());
-            return __T("");
+            Ztring ValueLowerCase=Ztring(Value).MakeLowerCase();
+            if (ValueLowerCase==__T("audio"))
+                File_Filter_Audio_Set(true);
+            else
+                File_Filter_Set(ValueLowerCase.To_int64u());
+            return Ztring();
         #else //MEDIAINFO_FILTER
             return __T("Filter manager is disabled due to compilation options");
         #endif //MEDIAINFO_FILTER
@@ -373,6 +380,30 @@ Ztring MediaInfo_Config_MediaInfo::Option (const String &Option, const String &V
                 Demux_PCM_20bitTo16bit_Set(false);
             else
                 Demux_PCM_20bitTo16bit_Set(true);
+            return Ztring();
+        #else //MEDIAINFO_DEMUX
+            return __T("Demux manager is disabled due to compilation options");
+        #endif //MEDIAINFO_DEMUX
+    }
+    else if (Option_Lower==__T("file_demux_pcm_20bitto24bit"))
+    {
+        #if MEDIAINFO_DEMUX
+            if (Value.empty())
+                Demux_PCM_20bitTo24bit_Set(false);
+            else
+                Demux_PCM_20bitTo24bit_Set(true);
+            return Ztring();
+        #else //MEDIAINFO_DEMUX
+            return __T("Demux manager is disabled due to compilation options");
+        #endif //MEDIAINFO_DEMUX
+    }
+    else if (Option_Lower==__T("file_demux_avc_transcode_iso14496_15_to_iso14496_10"))
+    {
+        #if MEDIAINFO_DEMUX
+            if (Value.empty())
+                Demux_Avc_Transcode_Iso14496_15_to_Iso14496_10_Set(false);
+            else
+                Demux_Avc_Transcode_Iso14496_15_to_Iso14496_10_Set(true);
             return Ztring();
         #else //MEDIAINFO_DEMUX
             return __T("Demux manager is disabled due to compilation options");
@@ -1027,6 +1058,18 @@ bool MediaInfo_Config_MediaInfo::File_Filter_Get ()
     return Exist;
 }
 
+void MediaInfo_Config_MediaInfo::File_Filter_Audio_Set (bool NewValue)
+{
+    CriticalSectionLocker CSL(CS);
+    File_Filter_Audio=NewValue;
+}
+
+bool MediaInfo_Config_MediaInfo::File_Filter_Audio_Get ()
+{
+    CriticalSectionLocker CSL(CS);
+    return File_Filter_Audio;
+}
+
 bool MediaInfo_Config_MediaInfo::File_Filter_HasChanged ()
 {
     CriticalSectionLocker CSL(CS);
@@ -1158,6 +1201,32 @@ bool MediaInfo_Config_MediaInfo::Demux_PCM_20bitTo16bit_Get ()
 {
     CriticalSectionLocker CSL(CS);
     return Demux_PCM_20bitTo16bit;
+}
+
+//---------------------------------------------------------------------------
+void MediaInfo_Config_MediaInfo::Demux_PCM_20bitTo24bit_Set (bool NewValue)
+{
+    CriticalSectionLocker CSL(CS);
+    Demux_PCM_20bitTo24bit=NewValue;
+}
+
+bool MediaInfo_Config_MediaInfo::Demux_PCM_20bitTo24bit_Get ()
+{
+    CriticalSectionLocker CSL(CS);
+    return Demux_PCM_20bitTo24bit;
+}
+
+//---------------------------------------------------------------------------
+void MediaInfo_Config_MediaInfo::Demux_Avc_Transcode_Iso14496_15_to_Iso14496_10_Set (bool NewValue)
+{
+    CriticalSectionLocker CSL(CS);
+    Demux_Avc_Transcode_Iso14496_15_to_Iso14496_10=NewValue;
+}
+
+bool MediaInfo_Config_MediaInfo::Demux_Avc_Transcode_Iso14496_15_to_Iso14496_10_Get ()
+{
+    CriticalSectionLocker CSL(CS);
+    return Demux_Avc_Transcode_Iso14496_15_to_Iso14496_10;
 }
 
 //---------------------------------------------------------------------------
@@ -1503,6 +1572,11 @@ void MediaInfo_Config_MediaInfo::Event_Accepted (File__Analyze* Source)
             for (size_t Pos=0; Pos<Event->second.size(); Pos++)
             {
                 Event_Send(NULL, Event->second[Pos]->Data_Content, Event->second[Pos]->Data_Size, Event->second[Pos]->File_Name);
+
+                int32u EventCode=*((int32u*)Event->second[Pos]->Data_Content);
+                if ((EventCode&0x00FFFF00)==(MediaInfo_Event_Global_Demux<<8) && NextPacket_Get())
+                    Demux_EventWasSent=true;
+
                 delete Event->second[Pos]; //Event->second[Pos]=NULL;
             }
 

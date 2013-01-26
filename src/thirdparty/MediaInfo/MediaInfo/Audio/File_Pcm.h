@@ -44,8 +44,11 @@ public :
     int64u          Frame_Count_Valid;
     ZenLib::Ztring  Codec;
     int16u          BitDepth;
+    int16u          BitDepth_Original; // In the case of demux from 20-bit stream, data is provided in 24-bit form
     int16u          Channels;
     int32u          SamplingRate;
+    int8u           Endianness;
+    int8u           Sign;
 
     //Constructor/Destructor
     File_Pcm();
@@ -53,9 +56,15 @@ public :
 private :
     //Streams management
     void Streams_Fill();
+    void Streams_Finish();
 
     //Buffer - File header
     bool FileHeader_Begin();
+
+    //Buffer - Global
+    #if MEDIAINFO_DEMUX
+    void Read_Buffer_Continue ();
+    #endif //MEDIAINFO_DEMUX
 
     //Buffer - Per element
     void Header_Parse();
