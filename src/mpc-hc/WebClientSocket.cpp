@@ -641,7 +641,7 @@ bool CWebClientSocket::OnBrowser(CStringA& hdr, CStringA& body, CStringA& mime)
                 files +=
                     "<td class=\"browser-td\"><a href=\"[path]?path=" + UTF8Arg(fullpath) + "\">" + UTF8(fd.cFileName) + "</a></td>\r\n"
                     "<td class=\"browser-td\"><span class=\"nobr\">" + UTF8(type) + "</span></td>\r\n"
-                    "<td class=\"browser-td\" align=\"right\"><span class=\"nobr\">" + size + "</span></td>\r\n"
+                    "<td class=\"browser-td align-right\"><span class=\"nobr\">" + size + "</span></td>\r\n"
                     "<td class=\"browser-td\"><span class=\"nobr\">" + CStringA(CTime(fd.ftLastWriteTime).Format(_T("%Y.%m.%d %H:%M"))) + "</span></td>\r\n";
                 files += "</tr>\r\n";
             } while (FindNextFile(hFind, &fd));

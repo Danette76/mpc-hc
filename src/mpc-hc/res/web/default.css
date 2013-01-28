@@ -233,6 +233,15 @@ img {
 	margin-right: auto;
 }
 
+#player,
+#player table,
+#player td,
+#player th {
+	border-collapse: separate;
+	padding: 0;
+	border-spacing: 0;
+}
+
 #player td {
 	font-family: Sans-Serif;
 	font-size: 13px;
@@ -271,9 +280,17 @@ img {
 	padding: 1px 5px;
 }
 
+#menu-help {
+	width: 100%;
+}
+
 #controlbar,
 #menu {
 	background: #ECE6D4;
+	width: 100%;
+}
+#statusbar {
+	width: 100%;
 }
 
 #statusbar,
@@ -354,6 +371,7 @@ img {
 
 #seekbar {
 	background: url(img/seekbarmid.png) repeat-x;
+	width: 100%;
 }
 
 #seekbar td {
@@ -409,4 +427,8 @@ img {
 .browser-th,
 .browser-td {
 	border: solid 1px;
+}
+
+.align-right {
+	text-align: right;
 }
