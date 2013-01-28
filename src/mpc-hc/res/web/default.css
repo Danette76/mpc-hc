@@ -51,6 +51,7 @@ img {
 #status,
 #title {
 	display:inline;
+	float:left;
 }
 
 #menu td {
@@ -183,4 +184,18 @@ img {
 
 #debug {
 	white-space:pre-wrap;
+}
+
+.centered {
+	text-align:center;
+}
+
+.browser-table {
+	padding:2px;
+	width:100%;
+}
+.browser-table,
+.browser-th,
+.browser-td {
+	border:solid 1px;
 }

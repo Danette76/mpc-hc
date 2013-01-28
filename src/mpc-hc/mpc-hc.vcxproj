@@ -685,6 +685,7 @@
     <None Include="res\web\img\vbs.png" />
     <None Include="res\web\index.html" />
     <None Include="res\web\info.html" />
+    <None Include="res\web\html5shiv.js" />
     <None Include="res\web\javascript.js" />
     <None Include="res\web\player.html" />
     <None Include="res\web\variables.html" />

@@ -132,6 +132,7 @@ void CWebServer::Init()
     m_downloads["/img/slidergrip.png"] = IDF_SLIDERGRIP_PNG;
     m_downloads["/img/vbg.png"] = IDF_VBR_PNG;
     m_downloads["/img/vbs.png"] = IDF_VBS_PNG;
+    m_downloads["/html5shiv.js"] = IDF_HTML5SHIV;
     m_downloads["/javascript.js"] = IDF_JAVASCRIPT;
 
     CRegKey key;

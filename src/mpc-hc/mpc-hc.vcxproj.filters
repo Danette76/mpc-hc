@@ -895,6 +895,9 @@
     <None Include="res\web\info.html">
       <Filter>Resource Files\web</Filter>
     </None>
+    <None Include="res\web\html5shiv.js">
+      <Filter>Resource Files\web</Filter>
+    </None>
     <None Include="res\web\javascript.js">
       <Filter>Resource Files\web</Filter>
     </None>

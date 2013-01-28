@@ -15,7 +15,6 @@ MPCIconLib:
 
 WebServer:
 1) Update the images for player.html using a css sprite
-2) Switch to html5
 
 FFmpeg:
 1) Use ffmpeg for MPEG-1 and MPEG-2 decoding (this will remove the dependency on libmpeg2)
