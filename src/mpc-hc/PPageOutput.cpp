@@ -1,6 +1,6 @@
 /*
  * (C) 2003-2006 Gabest
- * (C) 2006-2012 see Authors.txt
+ * (C) 2006-2013 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -136,13 +136,13 @@ BOOL CPPageOutput::OnInitDialog()
     m_fVMR9AlterativeVSync  = renderersSettings.m_AdvRendSets.fVMR9AlterativeVSync;
     m_fD3DFullscreen        = s.fD3DFullscreen;
 
-    int EVRBuffers[] = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40, 45, 50, 55, 60 };
+    unsigned int EVRBuffers[] = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40, 45, 50, 55, 60 };
     CString EVRBuffer;
-    for (size_t i = 0; i < _countof(EVRBuffers); i++) {
-        EVRBuffer.Format(_T("%d"), EVRBuffers[i]);
+    for (unsigned int i = 0; i < _countof(EVRBuffers); i++) {
+        EVRBuffer.Format(_T("%u"), EVRBuffers[i]);
         m_EVRBuffersCtrl.AddString(EVRBuffer);
     }
-    m_iEvrBuffers.Format(_T("%d"), renderersSettings.iEvrBuffers);
+    m_iEvrBuffers.Format(_T("%u"), renderersSettings.iEvrBuffers);
 
     m_iAudioRendererTypeCtrl.SetRedraw(FALSE);
     m_fResetDevice = s.m_RenderersSettings.fResetDevice;
@@ -408,7 +408,7 @@ BOOL CPPageOutput::OnApply()
 
     renderersSettings.fResetDevice = !!m_fResetDevice;
 
-    if (m_iEvrBuffers.IsEmpty() || _stscanf_s(m_iEvrBuffers, _T("%d"), &renderersSettings.iEvrBuffers) != 1) {
+    if (m_iEvrBuffers.IsEmpty() || _stscanf_s(m_iEvrBuffers, _T("%u"), &renderersSettings.iEvrBuffers) != 1) {
         renderersSettings.iEvrBuffers = 5;
     }
 

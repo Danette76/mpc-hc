@@ -1,6 +1,6 @@
 /*
  * (C) 2003-2006 Gabest
- * (C) 2006-2012 see Authors.txt
+ * (C) 2006-2013 see Authors.txt
  *
  * This file is part of MPC-HC.
  *
@@ -115,42 +115,42 @@ public:
 
     CAdvRendererSettings m_AdvRendSets;
 
-    int         iAPSurfaceUsage;
-    int         iDX9Resizer;
-    bool        fVMR9MixerMode;
-    bool        fVMR9MixerYUV;
-    int         iEvrBuffers;
+    int          iAPSurfaceUsage;
+    int          iDX9Resizer;
+    bool         fVMR9MixerMode;
+    bool         fVMR9MixerYUV;
+    unsigned int iEvrBuffers;
 
-    int         nSPCSize;
-    int         nSPCMaxRes;
-    bool        fSPCPow2Tex;
-    bool        fSPCAllowAnimationWhenBuffering;
+    int          nSPCSize;
+    int          nSPCMaxRes;
+    bool         fSPCPow2Tex;
+    bool         fSPCAllowAnimationWhenBuffering;
 
-    CString     D3D9RenderDevice;
-    void        UpdateData(bool fSave);
+    CString      D3D9RenderDevice;
+    void         UpdateData(bool fSave);
 };
 
 class CRenderersData
 {
-    HINSTANCE   m_hD3DX9Dll;
-    UINT        m_nDXSdkRelease;
+    HINSTANCE    m_hD3DX9Dll;
+    unsigned int m_nDXSdkRelease;
 
 public:
     CRenderersData();
 
     // Casimir666
-    bool        m_fTearingTest;
-    int         m_fDisplayStats;
-    bool        m_bResetStats; // Set to reset the presentation statistics
-    CString     m_strD3DX9Version;
+    bool         m_fTearingTest;
+    unsigned int m_fDisplayStats;
+    bool         m_bResetStats; // Set to reset the presentation statistics
+    CString      m_strD3DX9Version;
 
     // Hardware feature support
-    bool        m_bFP16Support;
-    bool        m_b10bitSupport;
+    bool         m_bFP16Support;
+    bool         m_b10bitSupport;
 
-    LONGLONG    GetPerfCounter();
-    HINSTANCE   GetD3X9Dll();
-    UINT        GetDXSdkRelease() { return m_nDXSdkRelease; };
+    LONGLONG     GetPerfCounter();
+    HINSTANCE    GetD3X9Dll();
+    unsigned int GetDXSdkRelease() { return m_nDXSdkRelease; };
 };
 
 extern CRenderersData*      GetRenderersData();

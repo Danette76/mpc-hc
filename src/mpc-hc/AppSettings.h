@@ -465,7 +465,7 @@ public:
     bool            fBDAUseOffset;
     int             iBDAOffset;
     bool            fBDAIgnoreEncryptedChannels;
-    UINT            nDVBLastChannel;
+    unsigned int    nDVBLastChannel;
     CAtlList<CDVBChannel> m_DVBChannels;
 
     // Internal Filters
@@ -515,7 +515,7 @@ public:
     bool            fLCDSupport;
     bool            fUseSearchInFolder;
     bool            fUseTimeTooltip;
-    int             nTimeTooltipPosition;
+    unsigned int    nTimeTooltipPosition;
     CString         strOSDFont;
     int             nOSDSize;
 
@@ -546,7 +546,7 @@ public:
     CString         strPnSPreset;
     CStringArray    m_pnspresets;
     // On top menu
-    int             iOnTop;
+    unsigned int    iOnTop;
     // After Playback
     bool            fExitAfterPlayback;
     bool            fNextInDirAfterPlayback;
@@ -577,8 +577,8 @@ public:
 
     // OTHER STATES
     CStringW        strLastOpenDir;
-    UINT            nLastWindowType;
-    UINT            nLastUsedPage;
+    unsigned int    nLastWindowType;
+    unsigned int    nLastUsedPage;
     bool            fRemainingTime;
     bool            fLastFullScreen;
 

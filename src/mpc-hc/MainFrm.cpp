@@ -9255,7 +9255,7 @@ void CMainFrame::SetDefaultWindowRect(int iMonitor)
         y = (mi.rcWork.top + mi.rcWork.bottom - h) / 2; // no need to call CenterWindow()
     }
 
-    UINT lastWindowType = s.nLastWindowType;
+    unsigned int lastWindowType = s.nLastWindowType;
     MoveWindow(x, y, w, h);
 
     if (s.iCaptionMenuMode != MODE_SHOWCAPTIONMENU) {
@@ -13144,7 +13144,7 @@ void CMainFrame::SetupNavChaptersSubMenu()
             const CDVBChannel& channel = s.m_DVBChannels.GetNext(pos);
             UINT flags = MF_BYCOMMAND | MF_STRING | MF_ENABLED;
 
-            if ((UINT)channel.GetPrefNumber() == s.nDVBLastChannel) {
+            if ((unsigned int)channel.GetPrefNumber() == s.nDVBLastChannel) {
                 flags |= MF_CHECKED;
             }
             pSub->AppendMenu(flags, ID_NAVIGATE_CHAP_SUBITEM_START + channel.GetPrefNumber(), channel.GetName());
@@ -13526,7 +13526,7 @@ void CMainFrame::ShowControls(int nCS, bool fSave /*= false*/)
     RecalcLayout();
 }
 
-void CMainFrame::SetAlwaysOnTop(int i)
+void CMainFrame::SetAlwaysOnTop(unsigned int i)
 {
     AfxGetAppSettings().iOnTop = i;
 
