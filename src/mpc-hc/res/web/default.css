@@ -415,14 +415,24 @@ img {
 }
 
 .browser-table {
-	padding: 2px;
+	border-collapse: separate;
+	border-spacing: 1px;
+	padding: 1px;
 	width: 100%;
 }
 
 .browser-table,
-.browser-th,
-.browser-td {
-	border: solid 1px;
+.browser-table th,
+.browser-table td {
+	border: 1px solid black;
+}
+
+.browser-table th {
+	white-space: nowrap;
+}
+
+.browser-table-name {
+	width: 100%;
 }
 
 .align-right {
